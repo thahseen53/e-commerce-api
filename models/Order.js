@@ -6,7 +6,8 @@ const OrderSchema = new mongoose.Schema(
     products: [
       {
         productId: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
+          ref:'Product'
         },
         quantity: {
           type: Number,
@@ -15,8 +16,17 @@ const OrderSchema = new mongoose.Schema(
       },
     ],
     amount: { type: Number, required: true },
-    address: { type: Object, required: true },
-    status: { type: String, default: "pending" },
+    address: { type: String, required: true },
+    status: 
+    { 
+      type: String,
+      trim:true,
+      enum:{
+        values:["Pending","Complete","Cancelled"]
+      },
+      default:"Pending",
+      required:[true,"Order status is required"]
+    },
   },
   { timestamps: true }
 );
